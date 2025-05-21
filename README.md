@@ -30,24 +30,24 @@ tar -xzvf GRCh38.d1.vd1.fa.tar.gz
 
 mkdir GRCh38_split
 
-<b>3. Выполним разбивку файла GRCh38.d1.vd1.fa на отдельные файлы,<b>
-<b>которые начинаются с символа '>', и повторим шаблон до конца файла '{*}'.<b>
-<b>Файлы напраляются в директорию GRCh38_split<b>
+## <b>3. Выполним разбивку файла GRCh38.d1.vd1.fa на отдельные файлы,<b>
+## <b>которые начинаются с символа '>', и повторим шаблон до конца файла '{*}'.<b>
+## <b>Файлы напраляются в директорию GRCh38_split<b>
 
 csplit -f GRCh38_split/chr GRCh38.d1.vd1.fa '/^>/' '{*}'
 
-<b>4. Создадим директорию GRCh38_main<b>
+## <b>4. Создадим директорию GRCh38_main<b>
 
 mkdir GRCh38_main
 
-<b>5. Перенесем необходимые файлы с 25 хромосомами в директорию GRCh38_main<b>
+## <b>5. Перенесем необходимые файлы с 25 хромосомами в директорию GRCh38_main<b>
 
 mv GRCh38_split/chr{1..22}.fa GRCh38_main  
 mv GRCh38_split/chrX.fa GRCh38_main  
 mv GRCh38_split/chrY.fa GRCh38_main  
 mv GRCh38_split/chrM.fa GRCh38_main
 
-<b>6. Проиндексируем основные хромосомы <b>
+## <b>6. Проиндексируем основные хромосомы <b>
 
 for f in GRCh38_main/*.fa; do
     samtools faidx "$f"
