@@ -7,7 +7,7 @@
 Преобразует исходный файл `FP_SNPs.txt` в формат `.tsv`, необходимый для последующей валидации.
   
 - **Валидация** (`--step validate`)  
-Проверяет, соответствует ли allele1 и allele2 референсному значению в сборке GRCh38. При необходимости меняет местами `REF` и `ALT`. SNPs, у которых ни один аллель не совпадает с референсом, исключаются.
+Проверяет, соответствует ли allele1 и allele2 референсному значению в сборке GRCh38. При необходимости меняет местами REF и ALT. SNPs, у которых ни один аллель не совпадает с референсом, исключаются.
 
 Режим `--step preprocess` запускается только с указанием аргумента `--input`. Аргумент `--input` требует файл `FP_SNPs.txt`. Итоговый файл сохраняется в той же директории с именем `FP_SNPs_10k_GB38_twoAllelsFormat.tsv`.
 
@@ -40,14 +40,14 @@ csplit -f GRCh38_split/chr GRCh38.d1.vd1.fa '/^>/' '{*}'
 
 mkdir GRCh38_main
 
-5. Перенесем необходимые файлы с 25 хромосомами в директорию GRCh38_main
+5. Перенесем файлы с 25 хромосомами в директорию GRCh38_main
 
-mv GRCh38_split/chr{1..22}.fa GRCh38_main/
-mv GRCh38_split/chrX.fa GRCh38_main/
-mv GRCh38_split/chrY.fa GRCh38_main/
-mv GRCh38_split/chrM.fa GRCh38_main/
+mv GRCh38_split/chr{1..22}.fa GRCh38_main  
+mv GRCh38_split/chrX.fa GRCh38_main  
+mv GRCh38_split/chrY.fa GRCh38_main  
+mv GRCh38_split/chrM.fa GRCh38_main
 
-6. Проиндексируем основные хромосомы 
+6. Проиндексируем перенесенные хромосомы
 
 for f in GRCh38_main/*.fa; do
     samtools faidx "$f"
@@ -65,15 +65,14 @@ python3 FP_SNPs_script.py \
 
 python3 FP_SNPs_script.py \
   --step validate \
-  --input FP_SNPs_10k_GB38_twoAllelsFormat.tsv path/to/GRCh38_dir \
+  --input FP_SNPs_10k_GB38_twoAllelsFormat.tsv GRCh38_main \
   --output validated_SNP.tsv
 
-По результатам работы файлы `validated_SNP.tsv` и `validated_SNP.log` будут сохранены в одной директории.  
+По результатам работы файлы `validated_SNP.tsv` и `validated_SNP.log` будут сохранены в директории (GRCh38_main).  
 
 ## Результат
 
-По итогам работы скрипта должно получиться 3 файла:
+По итогам работы скрипта получается 3 файла:
 -  .tsv-файл после предобработки (`--step preprocess`) `FP_SNPs_10k_GB38_twoAllelsFormat.tsv`
 -  .tsv-файл после валидации (`--step validate`) (например, validated_SNP.tsv)
 -  .log-файл после валидации (`--step validate`) (например, validated_SNP.log)
-
