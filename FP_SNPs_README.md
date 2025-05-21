@@ -60,7 +60,7 @@ python3 FP_SNPs_script.py \
   --input FP_SNPs_10k_GB38_twoAllelsFormat.tsv GRCh38_main \
   --output validated_SNP.tsv
 
-По результатам работы файлы `validated_SNP.tsv` и `validated_SNP.log` будут сохранены в директории (GRCh38_main).  
+По результатам работы файлы `validated_SNP.tsv` и `validated_SNP.log` будут сохранены в --output директории 
 
 ## Результат
 
