@@ -42,12 +42,9 @@ mkdir GRCh38_main
 
 5. Перенесем необходимые файлы с 25 хромосомами в директорию GRCh38_main
 
-mv GRCh38_split/chr{1..22}.fa GRCh38_main
-
-mv GRCh38_split/chrX.fa GRCh38_main
-
-mv GRCh38_split/chrY.fa GRCh38_main
-
+mv GRCh38_split/chr{1..22}.fa GRCh38_main \  
+mv GRCh38_split/chrX.fa GRCh38_main \  
+mv GRCh38_split/chrY.fa GRCh38_main \  
 mv GRCh38_split/chrM.fa GRCh38_main
 
 6. Проиндексируем основные хромосомы 
