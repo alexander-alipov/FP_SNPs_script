@@ -40,14 +40,14 @@ csplit -f GRCh38_split/chr GRCh38.d1.vd1.fa '/^>/' '{*}'
 
 mkdir GRCh38_main
 
-5. Перенесем необходимые файлы с 25 хромосомами в директорию GRCh38_main
+5. Перенесем файлы с 25 хромосомами в директорию GRCh38_main
 
 mv GRCh38_split/chr{1..22}.fa GRCh38_main  
 mv GRCh38_split/chrX.fa GRCh38_main  
 mv GRCh38_split/chrY.fa GRCh38_main  
 mv GRCh38_split/chrM.fa GRCh38_main
 
-6. Проиндексируем основные хромосомы
+6. Проиндексируем перенесенные хромосомы
 
 for f in GRCh38_main/*.fa; do
     samtools faidx "$f"
@@ -65,10 +65,10 @@ python3 FP_SNPs_script.py \
 
 python3 FP_SNPs_script.py \
   --step validate \
-  --input FP_SNPs_10k_GB38_twoAllelsFormat.tsv path/to/GRCh38_dir \
+  --input FP_SNPs_10k_GB38_twoAllelsFormat.tsv GRCh38_main \
   --output validated_SNP.tsv
 
-По результатам работы файлы `validated_SNP.tsv` и `validated_SNP.log` будут сохранены в одной директории.  
+По результатам работы файлы `validated_SNP.tsv` и `validated_SNP.log` будут сохранены в директории (GRCh38_main).  
 
 ## Результат
 
