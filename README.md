@@ -42,10 +42,13 @@ mkdir GRCh38_main
 
 5. Перенесем необходимые файлы с 25 хромосомами в директорию GRCh38_main
 
-mv GRCh38_split/chr{1..22}.fa GRCh38_main/
-mv GRCh38_split/chrX.fa GRCh38_main/
-mv GRCh38_split/chrY.fa GRCh38_main/
-mv GRCh38_split/chrM.fa GRCh38_main/
+mv GRCh38_split/chr{1..22}.fa GRCh38_main
+
+mv GRCh38_split/chrX.fa GRCh38_main
+
+mv GRCh38_split/chrY.fa GRCh38_main
+
+mv GRCh38_split/chrM.fa GRCh38_main
 
 6. Проиндексируем основные хромосомы 
 
@@ -72,7 +75,7 @@ python3 FP_SNPs_script.py \
 
 ## Результат
 
-По итогам работы скрипта должно получиться 3 файла:
+По итогам работы скрипта получается 3 файла:
 -  .tsv-файл после предобработки (`--step preprocess`) `FP_SNPs_10k_GB38_twoAllelsFormat.tsv`
 -  .tsv-файл после валидации (`--step validate`) (например, validated_SNP.tsv)
 -  .log-файл после валидации (`--step validate`) (например, validated_SNP.log)
