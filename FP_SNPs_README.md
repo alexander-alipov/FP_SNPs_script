@@ -31,6 +31,7 @@ CHROMS=("chr1" "chr2" "chr3" "chr4" "chr5" "chr6" "chr7" "chr8" "chr9" "chr10" \
 4. Создайте выходную директорию
 
 OUTDIR="chromosomes"
+
 mkdir -p "$OUTDIR"
 
 5. Индексируйте исходный FASTA-файл (один раз)
@@ -39,11 +40,8 @@ samtools faidx "$FASTA"
 
 6. Извлеките и проиндексируйте хромосомы по отдельности
 
-for chr in "${CHROMS[@]}"; do
-  echo "Извлечение $chr..."
-  samtools faidx "$FASTA" "$chr" > "${OUTDIR}/${chr}.fa"
-  samtools faidx "${OUTDIR}/${chr}.fa"
-done
+for chr in "${CHROMS[@]}"; do echo "Извлечение $chr..."; samtools faidx "$FASTA" "$chr" > "${OUTDIR}/${chr}.fa"; samtools faidx "${OUTDIR}/${chr}.fa"; done
+
 
 ## Запуск предобработки (--step preprocess)
 
@@ -57,7 +55,7 @@ python3 FP_SNPs_script.py \
 
 python3 FP_SNPs_script.py \
   --step validate \
-  --input FP_SNPs_10k_GB38_twoAllelsFormat.tsv GRCh38_main \
+  --input FP_SNPs_10k_GB38_twoAllelsFormat.tsv chromosomes \
   --output validated_SNP.tsv
 
 По результатам работы файлы `validated_SNP.tsv` и `validated_SNP.log` будут сохранены в --output директории 
