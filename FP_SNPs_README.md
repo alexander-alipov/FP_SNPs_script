@@ -18,32 +18,33 @@
 
 tar -xzvf GRCh38.d1.vd1.fa.tar.gz
 
-2. Создадим директорию GRCh38_split
+2. Сделайте исполняемым и запустите скрипт split_chromosomes.sh, который указан ниже. Он сохраняет референсные хромосомы в директорию /chromosomes
 
-mkdir GRCh38_split
+# Путь к исходному FASTA файлу
+FASTA="GRCh38.d1.vd1.fa"
 
-3. Выполним разбивку файла GRCh38.d1.vd1.fa на отдельные файлы,
-которые начинаются с символа '>', и повторим шаблон до конца файла '{*}'.
-Файлы напраляются в директорию GRCh38_split
+# Список нужных хромосом
+CHROMS=("chr1" "chr2" "chr3" "chr4" "chr5" "chr6" "chr7" "chr8" "chr9" "chr10" \
+        "chr11" "chr12" "chr13" "chr14" "chr15" "chr16" "chr17" "chr18" "chr19" \
+        "chr20" "chr21" "chr22" "chrX" "chrY" "chrM")
 
-csplit -f GRCh38_split/chr GRCh38.d1.vd1.fa '/^>/' '{*}'
+# Создание выходной папки
+OUTDIR="chromosomes"
+mkdir -p "$OUTDIR"
 
-4. Создадим директорию GRCh38_main
+# Индексация исходного файла (если индекс ещё не создан)
+if [ ! -f "${FASTA}.fai" ]; then
+  echo "Создание индекса для $FASTA..."
+  samtools faidx "$FASTA"
+fi
 
-mkdir GRCh38_main
-
-5. Перенесем файлы с 25 хромосомами в директорию GRCh38_main
-
-mv GRCh38_split/chr{1..22}.fa GRCh38_main  
-mv GRCh38_split/chrX.fa GRCh38_main  
-mv GRCh38_split/chrY.fa GRCh38_main  
-mv GRCh38_split/chrM.fa GRCh38_main
-
-6. Проиндексируем перенесенные хромосомы
-
-for f in GRCh38_main/*.fa; do
-    samtools faidx "$f"
+# Извлечение и индексация каждой хромосомы
+for chr in "${CHROMS[@]}"; do
+  echo "Извлечение $chr..."
+  samtools faidx "$FASTA" "$chr" > "${OUTDIR}/${chr}.fa"
+  samtools faidx "${OUTDIR}/${chr}.fa"
 done
+
 
 ## Запуск предобработки (--step preprocess)
 
