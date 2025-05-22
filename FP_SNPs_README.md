@@ -34,7 +34,7 @@ OUTDIR="chromosomes"
 
 mkdir -p "$OUTDIR"
 
-5. Индексируйте исходный FASTA-файл (один раз)
+5. Индексируйте исходный FASTA-файл
 
 samtools faidx "$FASTA"
 
