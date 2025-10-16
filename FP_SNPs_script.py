@@ -17,6 +17,19 @@ def setup_logger(output_path):
             f.write(full_msg + '\n')
     return log, log_path
 
+def parse_args2():
+    parser = argparse.ArgumentParser()
+    subparsers = parser.add_subparsers(dest='step', required=True)
+    
+    # Подкоманда preprocess
+    preprocess_parser = subparsers.add_parser('preprocess')
+    preprocess_parser.add_argument('--input', nargs='+', required=True)
+    
+    # Подкоманда validate
+    validate_parser = subparsers.add_parser('validate')
+    validate_parser.add_argument('--input', nargs='+', required=True)
+    validate_parser.add_argument('--output', required=True)  # только здесь!
+
 def parse_args():
     parser = argparse.ArgumentParser(
         description="Скрипт подготавливает данные и валидирует SNP по референсной сборке",
